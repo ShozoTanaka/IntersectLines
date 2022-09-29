@@ -74,7 +74,7 @@ inline bool IntersectCircleLine(
 	return false;
 }
 
-// 線分と線分が交差するか調べる
+// 線分と線分が交差するかどうかを調べる
 inline bool IntersectLines2D
 (
 	const DirectX::SimpleMath::Vector2& v1,
@@ -90,10 +90,26 @@ inline bool IntersectLines2D
 	DirectX::SimpleMath::Vector2 fromV3ToV2 = v2 - v3;
 	DirectX::SimpleMath::Vector2 fromV3ToV4 = v4 - v3;
 
-	// 外積が0の場合2つの線分は平行になる
+	// 外積の結果が0の場合2つの線分は平行になる
 	if (Cross2D(fromV1ToV2, fromV3ToV4) == 0.0f)
 		return false;
-
+	// 線分と線分が交差しているかどうかを判定する
 	return (Cross2D(fromV1ToV2, fromV1ToV3) * Cross2D(fromV1ToV2, fromV1ToV4) < 0.0f) &&
 		(Cross2D(fromV3ToV4, fromV3ToV1) * Cross2D(fromV3ToV4, fromV3ToV2) < 0.0f);
 }
+
+// 線分と線分の交点を計算する
+inline  const DirectX::SimpleMath::Vector2 IntersectPointLines2D(
+	const DirectX::SimpleMath::Vector2& v1,
+	const DirectX::SimpleMath::Vector2& v2,
+	const DirectX::SimpleMath::Vector2& v3,
+	const DirectX::SimpleMath::Vector2& v4
+)
+{
+	DirectX::SimpleMath::Vector2 fromV1ToV2 = v2 - v1;
+	DirectX::SimpleMath::Vector2 fromV1ToV3 = v3 - v1;
+	DirectX::SimpleMath::Vector2 fromV3ToV4 = v4 - v3;
+	// 線分と線分の交点を計算する
+	return v1 + fromV1ToV2 * Cross2D(fromV3ToV4, fromV1ToV3) / Cross2D(fromV3ToV4, fromV1ToV2);
+}
+

@@ -131,6 +131,7 @@ void GraphScene::Render()
 	{
 		// ü•ªV3-V4‚ð•`‰æ‚·‚é
 		m_graphics->DrawLine(m_vectorV3, m_vectorV4 - m_vectorV3, DirectX::Colors::Red);
+		m_graphics->DrawCircle(IntersectPointLines2D(m_vectorV1, m_vectorV2, m_vectorV3, m_vectorV4), 1.0f);
 	}
 	else
 	{
